@@ -1,5 +1,6 @@
 import { ArrowDropDown, Notifications, Search } from '@mui/icons-material'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import './navbar.scss'
 
 const Navbar: React.FC = () => {
@@ -15,11 +16,17 @@ const Navbar: React.FC = () => {
                 <img
                  src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
                   alt="" />
+                <Link to="/" className='link'>
                 <span>Home</span>
+                </Link>
+                <Link to="/tvshows" className='link'>
                 <span>TV Shows</span>
-                <span>Movies</span>
-                <span>New & Popular</span>
-                <span>My list</span>
+                </Link>
+                <Link to="/movies" className='link'>
+                <span >Movies</span>
+                </Link>
+                <span >New & Popular</span>
+                <span >My list</span>
             </div>
             <div className="right">
                 <Search className='icon' />

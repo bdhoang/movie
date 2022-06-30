@@ -1,5 +1,6 @@
 import { InfoOutlined, PlayArrow } from '@mui/icons-material'
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import './featured.scss'
 
 interface Props {
@@ -7,6 +8,27 @@ interface Props {
 }
 
 const Featured: React.FC<Props> = ({type}) => {
+    const [content, setContent] = useState<any>({})
+
+    useEffect(() => {
+      const getRandomContent = async () => {
+        try{
+            const res = await axios.get(`http://localhost:8800/api/movies/random?type=${type}`, {
+                headers: {
+                  token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjQyNTQ0NTAwYTFlYWQyZDI4MmYwNSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NjA1ODk4MCwiZXhwIjoxNjU2NDkwOTgwfQ.Jr_MDAwcfgwg6EWuqgYq6nWRMKf6y3ZSvhGUJPhV9IY",
+                },
+              })
+            setContent(res.data[0])
+        }catch(err){
+            console.log(err);      
+        }
+   
+    }
+        getRandomContent()
+    
+      }, [type])
+    console.log(content);
+    
   return (
     <div className='featured'>
         {type && (
@@ -28,14 +50,14 @@ const Featured: React.FC<Props> = ({type}) => {
             </div>
         )}
         <img 
-      src="https://occ-0-325-395.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABeCv4U2tiZaIt93JYt0OcIjXNEAylrwAM41RZbP2F_Qm5kMmVg9O8r_1E6S3sB7HvHXr78hXSQReQ_m8lHQAGAOIWecvlfAhWilQ.webp?r=372" 
+      src={content.img}
       alt="" />
         <div className="info">
             <img 
-            src="https://occ-0-325-395.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABRelsrlVotKV0Tpra_4hNE36w6ed_JuMOGylb5O3ee9DU4OT6zgVWMvvYu_YFIKU0Endl99iqrUgUH_a3k4AwaRNcK-E9ATEKwm_Ov8lpH2e.webp?r=ed0" 
+            src={content.imgTitle}
             alt="" />
             <span className='desc'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam dignissimos est voluptates similique doloribus eum deserunt obcaecati exercitationem et, eos labore ipsum aperiam optio rerum fugit eveniet, repellendus eaque laboriosam?
+                {content.desc}
             </span>
             <div className="buttons">
                 <button className='play'>
