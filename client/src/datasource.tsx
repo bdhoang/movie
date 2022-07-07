@@ -1,42 +1,41 @@
 
 export const userColumns = [
-    { field: "id", headerName: "ID", width: 70 },
+    { field: "_id", headerName: "ID", width: 70 },
     {
-      field: "user",
-      headerName: "User",
+      field: "movie",
+      headerName: "Movie",
       width: 230,
       renderCell: (params: any) => {
         return (
           <div className="cellWithImg">
             <img className="cellImg" src={params.row.img} alt="avatar" />
-            {params.row.username}
+            {params.row.title}
           </div>
         );
       },
     },
     {
-      field: "email",
-      headerName: "Email",
-      width: 230,
+      field: "genre",
+      headerName: "Genre",
+      width: 120,
     },
   
     {
-      field: "age",
-      headerName: "Age",
-      width: 100,
+      field: "year",
+      headerName: "Year",
+      width: 120,
     },
     {
-      field: "status",
-      headerName: "Status",
-      width: 160,
-      renderCell: (params: any) => {
-        return (
-          <div className={`cellWithStatus ${params.row.status}`}>
-            {params.row.status}
-          </div>
-        );
-      },
+      field: "limit",
+      headerName: "Limit",
+      width: 120,
     },
+    {
+      field: "isSeries",
+      headerName: "isSeries",
+      width: 120,
+    },
+   
   ];
 
 //temporary data

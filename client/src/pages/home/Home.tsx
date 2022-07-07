@@ -6,12 +6,12 @@ import List from '../../components/list/List';
 import axios from 'axios';
 
 interface Props{
-  type: string
+  type: string,
 }
+const value:any = localStorage.getItem("user")
 const Home: React.FC <Props>= ({type}) => {
   const [lists,setLists] = useState<object[]>([])
   const [genre, setGenre] = useState<string | null>(null)
-  console.log(type)
   useEffect(() => {
     const getRandomLists = async () => {
       try{
@@ -20,7 +20,7 @@ const Home: React.FC <Props>= ({type}) => {
             genre ? "&genre=" + genre : ""
           }`,{
             headers: {
-              token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjQyNTQ0NTAwYTFlYWQyZDI4MmYwNSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NjA1ODk4MCwiZXhwIjoxNjU2NDkwOTgwfQ.Jr_MDAwcfgwg6EWuqgYq6nWRMKf6y3ZSvhGUJPhV9IY",
+              token: "Bearer "+JSON.parse(value).accessToken,
             }
           })
           setLists(res.data)
@@ -30,10 +30,12 @@ const Home: React.FC <Props>= ({type}) => {
     }
     getRandomLists()
   },[type, genre])
+  console.log(lists);
+  
   return (
     <div className='home'>
       <Navbar />
-      <Featured type={type}/>
+      <Featured type={type} setGen={setGenre}/>
       {
         lists.map((list:any,index) =>(
           <List list={list} key={index}/>

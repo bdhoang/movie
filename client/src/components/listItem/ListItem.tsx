@@ -8,6 +8,7 @@ interface Props {
   index: number,
    item: {}
 }
+const value: any = localStorage.getItem("user")
 const ListItem: React.FC <Props>= ({index,item}) => {
   const [movie,setMovie] = useState<any>()
   const [isHovered,setIsHovered] = useState<boolean>(false)
@@ -17,7 +18,7 @@ const ListItem: React.FC <Props>= ({index,item}) => {
       try {
         const res = await axios.get("http://localhost:8800/api/movies/find/" + item, {
           headers: {
-            token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjQyNTQ0NTAwYTFlYWQyZDI4MmYwNSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NjA1ODk4MCwiZXhwIjoxNjU2NDkwOTgwfQ.Jr_MDAwcfgwg6EWuqgYq6nWRMKf6y3ZSvhGUJPhV9IY",
+            token: "Bearer "+JSON.parse(value).accessToken ,
           },
         });
         setMovie(res.data);
@@ -27,6 +28,8 @@ const ListItem: React.FC <Props>= ({index,item}) => {
     };
     getMovie();
   }, [item]);
+ 
+  
   return (
      <Link to={{pathname:"/watch"}} state={movie}>
     <div className='listItem'

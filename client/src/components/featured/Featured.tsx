@@ -4,10 +4,11 @@ import React, { useEffect, useState } from 'react'
 import './featured.scss'
 
 interface Props {
-    type: string
+    type: string,
+    setGen: any
 }
-
-const Featured: React.FC<Props> = ({type}) => {
+const value: any = localStorage.getItem("user")
+const Featured: React.FC<Props> = ({type,setGen}) => {
     const [content, setContent] = useState<any>({})
 
     useEffect(() => {
@@ -15,10 +16,11 @@ const Featured: React.FC<Props> = ({type}) => {
         try{
             const res = await axios.get(`http://localhost:8800/api/movies/random?type=${type}`, {
                 headers: {
-                  token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYjQyNTQ0NTAwYTFlYWQyZDI4MmYwNSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY1NjA1ODk4MCwiZXhwIjoxNjU2NDkwOTgwfQ.Jr_MDAwcfgwg6EWuqgYq6nWRMKf6y3ZSvhGUJPhV9IY",
+                  token: "Bearer "+JSON.parse(value).accessToken,
                 },
               })
             setContent(res.data[0])
+            
         }catch(err){
             console.log(err);      
         }
@@ -34,10 +36,10 @@ const Featured: React.FC<Props> = ({type}) => {
         {type && (
             <div className="category">
                 <span>
-                    {type ==="movie" ? "Movies" : "TV Shows"}
+                    {type ==="movie" ? "Movies" : "Series"}
                 </span>
-                <select name='genre' id='genre'>
-                    <option >Genre</option>
+                <select name='genre' id='genre' onChange={(e:any)=>setGen(e.target.value)}>
+                    <option  >Genre</option>
                     <option value="action">Action</option>
                     <option value="anime">Anime</option>
                     <option value="asian">Asian</option>
@@ -50,7 +52,7 @@ const Featured: React.FC<Props> = ({type}) => {
             </div>
         )}
         <img 
-      src={content.img}
+      src={content?.img}
       alt="" />
         <div className="info">
             <img 

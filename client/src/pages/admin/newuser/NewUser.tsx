@@ -1,5 +1,5 @@
 import React from 'react'
-import "./addnew.scss"
+import "./newuser.scss"
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import AdNav from '../../../components/admincpn/adnav/AdNav';
@@ -10,9 +10,9 @@ interface Props {
   inputs: any,
   title: string
 }
-const AddNew: React.FC <Props>= ({inputs,title}) => {
-  const [file, setFile] = useState("");
-
+const NewUser: React.FC <Props>= ({inputs,title}) => {
+  const [file, setFile] = useState<any>("");
+  console.log(file)
   return (
     <div className="new">
       <SideBar />
@@ -24,13 +24,14 @@ const AddNew: React.FC <Props>= ({inputs,title}) => {
         <div className="bottom">
           <div className="left">
             <img
-              // src={
-              //   file
-              //     ? URL.createObjectURL(file)
-              //     : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-              // }
+              src={
+                file
+                  ? URL.createObjectURL(file)
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+              }
               alt=""
             />
+            
           </div>
           <div className="right">
             <form>
@@ -41,7 +42,7 @@ const AddNew: React.FC <Props>= ({inputs,title}) => {
                 <input
                   type="file"
                   id="file"
-                  // onChange={(e) => setFile(e.target.files[0])}
+                  onChange={(e:any) => setFile(e.target.files[0])}
                   style={{ display: "none" }}
                 />
               </div>
@@ -61,4 +62,4 @@ const AddNew: React.FC <Props>= ({inputs,title}) => {
   );
 }
 
-export default AddNew
+export default NewUser

@@ -4,13 +4,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
+import { AuthContextProvider } from './context/admin/authContext/AuthContext';
+import { MovieContextProvider } from './context/admin/movieContext/MovieContext';
+import { ListContextProvider } from './context/admin/listContext/ListContext';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
   <BrowserRouter>
+  <AuthContextProvider>
+    <MovieContextProvider>
+      <ListContextProvider>
     <App />
+    </ListContextProvider>
+    </MovieContextProvider>
+    </AuthContextProvider>
   </BrowserRouter>
 </React.StrictMode>
 );
