@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import "./movie.scss"
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Publish } from '@mui/icons-material';
 import { updateMovie } from '../../../context/admin/movieContext/apiCall';
 import { MovieContext } from '../../../context/admin/movieContext/MovieContext';
@@ -18,7 +18,7 @@ const Movie:React.FC= () => {
     const [video, setVideo] = useState<any>(null);
     const [uploaded, setUploaded] = useState<any>(0);
     const { dispatch } = useContext(MovieContext);
-    
+    const navigate = useNavigate()
     const handleChange = (e:any) => {
     const value = e.target.value;
     setTmpMovie({ ...tmpMovie, _id:movie._id,[e.target.name]: value });
@@ -27,6 +27,7 @@ const Movie:React.FC= () => {
     const handleSubmit = (e:any) => {
         e.preventDefault();
         updateMovie(tmpMovie, dispatch);
+        navigate("/admin/movies")
     }
     console.log(tmpMovie);
     
@@ -157,7 +158,7 @@ const Movie:React.FC= () => {
             Update
           </button>
         ) : (
-          <button className="addMovieButton" onClick={handleUpload}>
+          <button className="addMovieButton" onClick={handleUpload} disabled>
             Upload
           </button>
         )}

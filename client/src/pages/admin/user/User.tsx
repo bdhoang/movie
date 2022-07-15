@@ -1,6 +1,6 @@
-import { CalendarToday, LocationSearching, MailOutline, PermIdentity, PhoneAndroid, Publish } from '@mui/icons-material';
+import {  LocationSearching, MailOutline, PhoneAndroid, Publish } from '@mui/icons-material';
 import React, { useContext, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import { updateUser } from '../../../context/admin/userContext/apiCall';
 import { UserContext } from '../../../context/admin/userContext/UserContext';
 import "./user.scss"
@@ -9,7 +9,7 @@ const User:React.FC = () => {
   const user: any = location?.state
   const { dispatchUser } = useContext(UserContext);
   const [tempUser, setTempUser] = useState<any>(null);
-  console.log(user._id);
+  const navigate = useNavigate()
   
   const handleChange = (e:any) => {
     const value = e.target.value;
@@ -18,6 +18,7 @@ const User:React.FC = () => {
   const handleUpdate = (e:any) => {
     e.preventDefault();
     updateUser(tempUser, dispatchUser);
+    navigate("/admin/users")
   }
   console.log(tempUser);
   

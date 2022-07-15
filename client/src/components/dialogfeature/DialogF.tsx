@@ -121,7 +121,7 @@ console.log(value);
         <video src={movie?.trailer} style={{width:"100%"}} autoPlay={true} loop />
         <div className="itemInfo">
           <div className="itemInfoTop">
-            <span>{"Duration: " + movie?.duration}</span>
+            <span>Duration: 2 hours</span>
             <span className='limit'>{"Limit: " + movie?.limit}</span>
             <span>{"Year: " + movie?.year}</span>
             <FacebookShareButton children={<FacebookIcon style={{marginLeft:"10px"}} size={32} round/>} url={movie?.trailer} />

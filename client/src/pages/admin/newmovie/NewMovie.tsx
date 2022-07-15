@@ -1,4 +1,5 @@
 import React , {useState, useContext} from 'react'
+import { useNavigate } from 'react-router-dom';
 import { createMovie } from '../../../context/admin/movieContext/apiCall';
 import { MovieContext } from '../../../context/admin/movieContext/MovieContext';
 import storage from '../../../firebase';
@@ -14,7 +15,7 @@ const NewMovie:React.FC = () => {
     const [video, setVideo] = useState<any>(null);
     const [uploaded, setUploaded] = useState<any>(0);
     const { dispatch } = useContext(MovieContext);
-    
+    const navigate = useNavigate()
     const handleChange = (e:any) => {
     const value = e.target.value;
     setMovie({ ...movie, [e.target.name]: value });
@@ -24,6 +25,7 @@ const NewMovie:React.FC = () => {
     const handleSubmit = (e:any) => {
         e.preventDefault();
         createMovie(movie, dispatch);
+        navigate("/admin/movies")
     }
 
     const upload = (items:any) => {

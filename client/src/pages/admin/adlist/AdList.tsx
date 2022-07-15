@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { updateList } from '../../../context/admin/listContext/apiCall';
 import { ListContext } from '../../../context/admin/listContext/ListContext';
 import { getMovies } from '../../../context/admin/movieContext/apiCall';
@@ -12,7 +12,7 @@ const AdList:React.FC = () => {
     const { state, dispatch: dispatchMovie } = useContext(MovieContext);
     const { dispatch} = useContext(ListContext);
     const [tempList, setTempList] = useState<any>(null);
-
+    const navigate = useNavigate()
     useEffect(() => {
       getMovies(dispatchMovie);
     }, [dispatchMovie]);
@@ -23,6 +23,7 @@ const AdList:React.FC = () => {
     const handleUpdate = (e:any) => {
       e.preventDefault();
       updateList(tempList, dispatch);
+      navigate("/admin/lists")
     }
     const handleSelect = (e:any) => {
       let value = Array.from(e.target.selectedOptions, (option:any) => option.value);
