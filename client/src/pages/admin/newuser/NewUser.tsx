@@ -1,63 +1,99 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import { createUser } from '../../../context/admin/userContext/apiCall';
+import { UserContext } from '../../../context/admin/userContext/UserContext';
 import "./newuser.scss"
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
-import AdNav from '../../../components/admincpn/adnav/AdNav';
-import SideBar from '../../../components/admincpn/sidebar/SideBar';
-
-
-interface Props {
-  inputs: any,
-  title: string
+import storage from '../../../firebase';
+const NewUser:React.FC = () => {
+  const [user, setUser] = useState<any>(null);
+  const [profilePic, setProfilePic] = useState<any>(null);
+  const [uploaded, setUploaded] = useState<any>(0);
+  const { dispatchUser } = useContext(UserContext);
+  const handleOnChange = (e:any) => {
+    const value = e.target.value;
+    setUser({ ...user, [e.target.name]: value });
+  }
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+    createUser(user, dispatchUser);
 }
-const NewUser: React.FC <Props>= ({inputs,title}) => {
-  const [file, setFile] = useState<any>("");
-  console.log(file)
-  return (
-    <div className="new">
-      <SideBar />
-      <div className="newContainer">
-        <AdNav />
-        <div className="top">
-          <h1>{title}</h1>
-        </div>
-        <div className="bottom">
-          <div className="left">
-            <img
-              src={
-                file
-                  ? URL.createObjectURL(file)
-                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-              }
-              alt=""
-            />
-            
-          </div>
-          <div className="right">
-            <form>
-              <div className="formInput">
-                <label htmlFor="file">
-                  Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                </label>
-                <input
-                  type="file"
-                  id="file"
-                  onChange={(e:any) => setFile(e.target.files[0])}
-                  style={{ display: "none" }}
-                />
-              </div>
+const upload = (items:any) => {
+  items.forEach((item:any) => {
+    const fileName = new Date().getTime() + item.label + item.file.name;
+    const uploadTask = storage.ref(`/items/${fileName}`).put(item.file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+          setUser((prev:any) => {
+            return { ...prev, [item.label]: url };
+          });
+          setUploaded(1);
+        });
+      }
+    );
+  });
+};
+const handleUpload = (e:any) => {
+  e.preventDefault();
+  upload([
+    { file: profilePic, label: "profilePic" },
+  ]);
+};
 
-              {inputs.map((input: any) => (
-                <div className="formInput" key={input.id}>
-                  <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} />
-                </div>
-              ))}
-              <button>Send</button>
-            </form>
-          </div>
+  return (
+    <div className="newUser">
+      <h1 className="newUserTitle">New User</h1>
+      <form className="newUserForm">
+        <div className="newUserItem">
+          <label>Username</label>
+          <input type="text" placeholder="john" name='username' onChange={handleOnChange}/>
         </div>
-      </div>
+        <div className="newUserItem">
+          <label>Full Name</label>
+          <input type="text" placeholder="John Smith" onChange={handleOnChange}/>
+        </div>
+        <div className="newUserItem">
+          <label>Email</label>
+          <input type="email" placeholder="john@gmail.com" name='email' onChange={handleOnChange}/>
+        </div>
+        <div className="newUserItem">
+          <label>Password</label>
+          <input type="password" placeholder="password" name='password' onChange={handleOnChange}/>
+        </div>
+        <div className="newUserItem">
+          <label>isAdmin</label>
+          <select className="newUserSelect" name="isAdmin" id="isAdmins ">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div className="newUserItem">
+          <label htmlFor='profilePic'>ProfilePic</label>
+          <input
+            type="file"
+            id="profilePic"
+            name="profilePic"
+            onChange={(e:any) => setProfilePic(e.target?.files[0])}
+          />
+        </div>
+        {uploaded === 1 ? (
+          <button className="newUserButton" onClick={handleSubmit}>
+            Create
+          </button>
+        ) : (
+          <button className="newUserButton" onClick={handleUpload}>
+            Upload
+          </button>
+        )}
+      </form>
     </div>
   );
 }

@@ -7,36 +7,40 @@ const SideBar:React.FC = () => {
   return (
     <div className='sidebar'>
         <div className="top">
-            <span className="logo">NetFlix Admin</span>
+            <Link to="/" className='link'>
+            <img
+                 src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
+                  alt="" />
+            </Link>
         </div>
         <hr/>
         <div className="center">
             <ul>
                 <li>
-                        <Link to="/admin/user" >
+                        <Link to="/admin/users" className='link' >
                         <PersonOutline className='icon'/>
                         <span>Users</span>
                         </Link>
                 </li>
                 <li>    
-                        <Link to="/admin/">
+                        <Link to="/admin/" className='link'>
                         <Movie className='icon' />
                         <span>Movies</span>
                         </Link>
                 </li>
                 <li>    
-                        <Link to="/admin/lists">
+                        <Link to="/admin/lists" className='link'>
                         <List className='icon' />
                         <span>Lists</span>
                         </Link>
                 </li>
                 <li>    
-                        <Link to = "/admin/movie/newmovie">
+                        <Link to = "/admin/movie/newmovie" className='link'>
                         <AddCard className='icon' />
                         <span>Add Movie</span>
                         </Link>
                 </li>
-                <li>    <Link to = "/admin/lists/newlist">
+                <li>    <Link to = "/admin/lists/newlist" className='link'>
                         <AddCard className='icon' />
                         <span>Add List</span>
                         </Link>

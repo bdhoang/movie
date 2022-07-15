@@ -21,9 +21,10 @@ const AdListList:React.FC = () => {
   
     const columns = [
       { field: "_id", headerName: "ID", width: 250 },
-      { field: "title", headerName: "title", width: 250 },
+      { field: "title", headerName: "Title", width: 250 },
       { field: "genre", headerName: "Genre", width: 150 },
-      { field: "type", headerName: "type", width: 150 },
+      { field: "type", headerName: "Type", width: 150 },
+      { field: "content.length", headerName: "Movies", width: 150 },
       {
         field: "action",
         headerName: "Action",

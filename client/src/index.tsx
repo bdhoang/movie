@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from './context/admin/authContext/AuthContext';
 import { MovieContextProvider } from './context/admin/movieContext/MovieContext';
 import { ListContextProvider } from './context/admin/listContext/ListContext';
+import { UserContextProvider } from './context/admin/userContext/UserContext';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
@@ -16,7 +17,9 @@ root.render(
   <AuthContextProvider>
     <MovieContextProvider>
       <ListContextProvider>
+        <UserContextProvider>
     <App />
+    </UserContextProvider>
     </ListContextProvider>
     </MovieContextProvider>
     </AuthContextProvider>

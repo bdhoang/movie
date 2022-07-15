@@ -33,6 +33,7 @@ router.put("/:id", verify, async (req, res) => {
       res.status(200).json(updatedMovie);
     } catch (err) {
       res.status(500).json(err);
+      console.log(err.message);
     }
   } else {
     res.status(403).json("You are not allowed!");
@@ -64,6 +65,18 @@ router.get("/find/:id", verify, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.get("/find", verify, async (req, res) => {
+  try {
+    const search = req.query.name
+    const movie = await Movie.find({title:{$regex: search,$options:"$i"}});
+    res.status(200).json(movie);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
 
 //GET RANDOM
 

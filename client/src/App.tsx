@@ -5,8 +5,6 @@ import {
 } from "react-router-dom";
 import './App.scss';
 import { AuthContext } from './context/admin/authContext/AuthContext';
-import { userInputs } from './formSource';
-import AddNew from './pages/admin/newuser/NewUser';
 import Movie from './pages/admin/movie/Movie';
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
@@ -21,6 +19,10 @@ import AdNav from './components/admincpn/adnav/AdNav';
 import MovieList from './pages/admin/movieList/MovieList';
 import NewList from './pages/admin/newlist/NewList';
 import PrivateRoutes from './PrivateRouter';
+import User from './pages/admin/user/User';
+import UserList from './pages/admin/userlist/UserList';
+import SearchPage from './pages/search/SearchPage';
+import Profile from './pages/profile/Profile';
 
 const Element:React.FC <{Elm:any}> = ({Elm}) => {
   return (
@@ -38,13 +40,11 @@ const Element:React.FC <{Elm:any}> = ({Elm}) => {
 
 const App: React.FC  = () => {
   const {state} = useContext(AuthContext)
-  const dataUser = localStorage.getItem("user")
-  const data = dataUser ? JSON.parse(dataUser) : null
   return (
     <Routes>
         <Route path="/" element={state.user ? <Home type="" /> : <Navigate to="/register" replace />} />
-        <Route path="/login" element={state.user ?( state.user.isAdmin?  <Navigate to="/admin" replace /> : <Navigate to="/" replace /> )  : <Login /> } />
-        <Route path="/register" element={state.user  ? <Navigate to="/" replace /> : <Register /> } />
+        <Route path="/login" element={state.user ?<Navigate to="/" replace />   : <Login /> } />
+        <Route path="/register" element={state.user ? <Navigate to="/" replace /> : <Register /> } />
         <Route>
           
         </Route>
@@ -53,7 +53,10 @@ const App: React.FC  = () => {
             <>
             <Route path="/movies" element={<Home type="movie"/>} />
             <Route path="/series" element={<Home type="series"/>} />
-            <Route path="/watch" element={<Watch />} />
+            <Route path="/watch/:id" element={<Watch />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/profile" element={<Profile />} />
+
             <Route element={<PrivateRoutes />}>
             <Route path="/admin" element={ <Element Elm={MovieList} /> } />
             <Route path="/admin/lists" element={ <Element Elm={AdListList} /> } />
@@ -61,6 +64,9 @@ const App: React.FC  = () => {
             <Route path="/admin/lists/newlist" element={ <Element Elm={NewList} /> } />
             <Route path="/admin/movie/:movieId" element={ <Element Elm={Movie} /> } />
             <Route path="/admin/movie/newmovie" element={ <Element Elm={NewMovie} /> } />
+            <Route path="/admin/users" element={ <Element Elm={UserList} /> } />
+            <Route path="/admin/users/newuser" element={ <Element Elm={NewUser} /> } />
+            <Route path="/admin/users/:userId" element={ <Element Elm={User} /> } />
             </Route>
             </>
           )

@@ -1,0 +1,98 @@
+.icon{
+    border: 2px solid white;
+    padding: 5px;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.dialog{
+    background-color: #181818 !important;
+}
+.itemInfo{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    .itemInfoTop{
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        color: gray;
+
+        .limit{
+            border: 1px solid gray;
+            padding: 1px 3px;
+            margin: 0 10px;
+        }
+    }
+    .desc{
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+    .genre{
+        font-size: 14px;
+        color: lightgray;
+    }
+}
+.body {
+    min-height: 300px;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+   .comment{
+        background-color: rgb(255, 255, 255);
+     .cmtHeader{
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
+    .cmtBody{
+        width: 90%;
+        display: flex;
+        justify-content: start;
+        margin-left: 20px;
+        align-items: center;
+        img{
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        .cmtInfo{
+            height: auto;
+            background-color: rgb(255, 189, 189);
+           
+        }
+    }
+   }
+}
+
+.cmtCard{
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    width: 90%;
+    
+    img{
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+
+    }
+
+    .cmtContent{
+       margin-top: 5px;
+        margin-left: 10px;
+        border-radius: 5px;
+        background-color: rgb(230, 230, 230);
+        padding: 10px;
+       .cmtName{
+        font-size: 18px;
+        
+       }
+    }
+}

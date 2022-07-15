@@ -10,6 +10,7 @@ interface Props{
 }
 const value:any = localStorage.getItem("user")
 const Home: React.FC <Props>= ({type}) => {
+
   const [lists,setLists] = useState<object[]>([])
   const [genre, setGenre] = useState<string | null>(null)
   useEffect(() => {

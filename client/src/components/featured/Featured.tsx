@@ -1,6 +1,8 @@
 import { InfoOutlined, PlayArrow } from '@mui/icons-material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import CustomizedDialogsF from '../dialogfeature/DialogF'
 import './featured.scss'
 
 interface Props {
@@ -9,8 +11,7 @@ interface Props {
 }
 const value: any = localStorage.getItem("user")
 const Featured: React.FC<Props> = ({type,setGen}) => {
-    const [content, setContent] = useState<any>({})
-
+    const [movie, setMovie] = useState<any>({})
     useEffect(() => {
       const getRandomContent = async () => {
         try{
@@ -19,7 +20,7 @@ const Featured: React.FC<Props> = ({type,setGen}) => {
                   token: "Bearer "+JSON.parse(value).accessToken,
                 },
               })
-            setContent(res.data[0])
+            setMovie(res.data[0])
             
         }catch(err){
             console.log(err);      
@@ -29,7 +30,7 @@ const Featured: React.FC<Props> = ({type,setGen}) => {
         getRandomContent()
     
       }, [type])
-    console.log(content);
+    
     
   return (
     <div className='featured'>
@@ -52,24 +53,22 @@ const Featured: React.FC<Props> = ({type,setGen}) => {
             </div>
         )}
         <img 
-      src={content?.img}
+      src={movie?.img}
       alt="" />
         <div className="info">
             <img 
-            src={content.imgTitle}
+            src={movie?.imgTitle}
             alt="" />
             <span className='desc'>
-                {content.desc}
+                {movie?.desc}
             </span>
             <div className="buttons">
                 <button className='play'>
-                    <PlayArrow /> 
-                    <span>Play</span>
+                   <Link className='link' to={`/watch/${movie._id}`} state={movie}>
+                   <PlayArrow /> 
+                    <span>Play</span></Link>
                 </button>
-                <button className='moreInfo'>
-                    <InfoOutlined />
-                    <span>More Info</span>
-                </button>
+                <CustomizedDialogsF id = {movie?._id} />
             </div>
         </div>
     </div>

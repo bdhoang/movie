@@ -15,7 +15,7 @@ const MovieList = () => {
   useEffect(() => {
     getMovies(dispatch)
   }, [dispatch])
-  console.log(state.movies);
+
   
   const handleDelete = (id: any) => {
    deleteMovie(id, dispatch)

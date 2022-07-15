@@ -1,6 +1,5 @@
 import { ArrowBackIosOutlined, ArrowForwardIosOutlined } from '@mui/icons-material'
 import React, { useRef,useState } from 'react'
-import { Link } from 'react-router-dom'
 import ListItem from '../listItem/ListItem'
 import './list.scss'
 
@@ -34,7 +33,7 @@ const List: React.FC<Props> = ({list}) => {
     
   return (
     <div className='list'>
-        <span className="listTitle">
+        <span className="listTitle" >
             {list.title}
         </span>
         <div className="wrapper" >

@@ -9,6 +9,9 @@ import {
   getMoviesFailure,
   getMoviesStart,
   getMoviesSuccess,
+  updateMovieFailure,
+  updateMovieStart,
+  updateMovieSuccess,
 } from "./MovieActions";
 const value: any = localStorage.getItem("user")
 
@@ -16,15 +19,30 @@ const value: any = localStorage.getItem("user")
 export const getMovies = async (dispatch: any) => {
   dispatch(getMoviesStart());
   try {
-    console.log(value);
     const res = await axios.get("http://localhost:8800/api/movies", {
       headers: {
         token: "Bearer "+JSON.parse(value).accessToken,
       },
     });
     dispatch(getMoviesSuccess(res.data));
-  } catch (err) {
+  } catch (err) { 
     dispatch(getMoviesFailure());
+  }
+};
+
+// update
+
+export const updateMovie = async (movie: any ,dispatch :any) => {
+  dispatch(updateMovieStart());
+  try {
+    const res = await axios.put("http://localhost:8800/api/movies/"+ movie._id,movie, {
+      headers: {
+        token: "Bearer "+JSON.parse(value).accessToken,
+      },
+    });
+    dispatch(updateMovieSuccess(res.data));
+  } catch (err) {
+    dispatch(updateMovieFailure());
   }
 };
 
